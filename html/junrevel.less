@@ -1,0 +1,86 @@
+html {
+    font: 18px/40px sans-serif;
+    background-color: #D4FFD5;
+    color: #111
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  max-height: 100dvh;
+}
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+canvas{
+    display: block;
+    object-fit: contain;
+    // 方形构图
+    aspect-ratio: 1;
+    max-width: 100vw;
+    max-height: 100vh;
+    margin: auto;
+    background-color: #FFF;
+}
+
+svg{
+    width: 1em;
+    height: 1em;
+    pointer-events: none;
+}
+
+#设置等级 {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background: #FFF;
+    width: 200px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 3px 6px 0 rgba(0,0,0,0.1);
+    border: 4px solid #000;
+    text-align: center;
+    font-weight: bold;
+
+
+    h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 30px;
+        line-height: 40px;
+        cursor: default;
+        padding: 14px 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    a {
+        padding: 10px;
+        font-size: 24px;
+        line-height: 28px;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    div{
+        display: flex;
+        // 倒序
+        flex-direction: column-reverse;
+    }
+
+    @media (max-width: 420px) {
+        transform: scale(0.7);
+    }
+}
