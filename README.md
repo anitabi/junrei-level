@@ -1,6 +1,26 @@
-junrevel.junreimap.com
+# 📌「巡礼等级」标记你的都道府县巡礼制霸等级
 
-anitabi.cn/junrevel/
-anitabi.cn/level/
+在线地址：https://hk.anitabi.cn/junrevel/
 
+一个标记都道府县巡礼等级的在线工具
+
+## 功能
+- 可以在线标记都道府县巡礼作品数
+- 标记后可生成图片进行社区分享
+- 分享巡礼等级图像
+- 标记过的信息会记录到本地存储，有新进展再次打开网页更新即可
+- 自行实现了所需字形的中线字体
+- 可爱看板娘朝日礼探出动画 :3
+
+## 说明
+和中国制霸一样，对日本都道府县在保留地缘相接特征的基础上进行了极端简化，实现一目了然的展现地缘关系
+
+仅包含 1都、1道、2府、43县 共47个行政区
+
+## 参考
+ - 中国制霸 https://lab.magiconch.com/china-ex/
+ - 制縣等級 https://zhung.com.tw/japanex/
+
+## GitHub
+https://github.com/anitabi/junrei-level
 

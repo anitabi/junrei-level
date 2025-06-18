@@ -4,13 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>巡礼等级</title>
+    <title>巡礼等级 - 巡礼制霸 - 标记你的都道府县巡礼作品数</title>
     <link rel="stylesheet" href="junrevel.css">
+    <meta name="description" content="标记你的都道府县巡礼等级">
+    <meta name="keywords" content="巡礼等级,巡礼制霸,都道府县,巡礼,地图,圣地巡礼,anitabi,巡礼地图">
 </head>
 
 <body>
+    <div class="junrevel-box">
+    </div>
+    <div class="ctrl-box">
+        <a class="ui-btn" href="https://anitabi.cn/map" target="_blank">进入地图</a>
+        <a class="ui-btn current output-btn">保存图像</a>
+    </div>
+    <div class="output-shadow" data-hidden="true">
+        <div class="output-box">
+            <img>
+            <p>
+                <b>长按</b>
+                或
+                <b>右键</b>
+                保存图像到相册
+            </p>
+            <div class="ctrl-box">
+                <a class="ui-btn">关闭</a>
+            </div>
+        </div>
+    </div>
     <script src="mojis.mjs"></script>
     <script src="junrevel.mjs"></script>
-</body>
 
+    <article>
+        <p>
+            点击都道府县，标记巡礼过的作品数
+        </p>
+        <p>
+            状态存储在浏览器中
+            <b>随时接着改</b>
+        </p>
+        <p>
+            保存失败时可以试试
+            <b>长按存相册</b>
+        </p>
+    </article>
+
+    <footer>
+        <a href="https://anitabi.cn/" target="_blank">Anitabi 巡礼地图</a>
+        <i>·</i>
+        <a href="https://github.com/itorr/junrei-level" target="_blank">GitHub</a>
+        <i>·</i>
+        <a href="https://lab.maginconch.com/" target="_blank">神奇海螺试验场</a>
+    </footer>
+</body>
 </html>

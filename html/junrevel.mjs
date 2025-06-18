@@ -67,9 +67,9 @@ const prefectures = `北海道,349,16,135,80,47,33,h
     };
 });
 
-
-
-
+const themeColor = '#164c21';
+const cn = '巡礼地图';
+const en = `Anitabi`;
 const scale = 4;
 const width = 500;
 const height = 500;
@@ -83,9 +83,38 @@ const output = canvas;
 
 // const output = new Image();
 // output.crossOrigin = 'anonymous';
-document.body.appendChild(output);
+document.querySelector('.junrevel-box').appendChild(output);
 
+const outputBtn = document.querySelector('.output-btn');
+const outputBox = document.querySelector('.output-shadow');
+const outputImage = outputBox.querySelector('img');
+const closeBtn = outputBox.querySelector('a');
 
+const showOutput = url=>{
+    outputImage.src = url;
+    outputBox.removeAttribute('data-hidden');
+}
+closeBtn.onclick = () => outputBox.setAttribute('data-hidden','true')
+
+const saveFile = (name,url)=>{
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.click();
+}
+outputBtn.onclick = ()=>{
+    // canvas.toBlob(blob=>{
+    //     const url = URL.createObjectURL(blob);
+    //     showOutput(url);
+    // },'image/png');
+    const url = canvas.toDataURL('image/png');
+    showOutput(url);
+    
+    // 判断当前屏幕宽度 小于 600 时，不尝试自动下载
+    if(window.innerWidth > 600) {
+        saveFile(`巡礼等级_${en}_${new Date().toLocaleString()}.png`,url);
+    }
+}
 const ctx = canvas.getContext('2d');
 
 const fontSize = 14;
@@ -108,6 +137,36 @@ const getMojiWidth = (moji) => {
 
     return fontSize;
 
+}
+const handPathStr = 'M31.1,45.4c0,0,0.2-26.5,0.2-29.2c0-5.3,8-5.1,8,0c0,4.9,0,5.6,0,26.6c0,0,0-8,0-11.7c0-5.6,8-5.8,8,0c0,4.9,0,12.3,0,12.3s0-5.7,0-9.5c0-5.4,7.6-5,7.6,0.3c0,2.8,0,10.9,0,10.9c0,0,0-3.3,0-7.2c0-2.6,1.9-3.9,3.7-3.8c1.9,0.1,3.8,1.5,3.8,4.2c0.2,16.5-1,26.8-12.8,29.3c-14,3-23-6.3-33.1-25.6c-2.4-4.7,3.1-8.7,6.6-5.2C26.7,40.4,31.1,45.4,31.1,45.4z';
+const handPath = new Path2D(handPathStr);
+const drawHand = (x,y,scale = 1)=>{
+    ctx.save();
+    ctx.scale(scale, scale);
+
+
+    ctx.translate(x, y);
+
+
+    // 先向下移动 2px 画个投影
+    // ctx.translate(0, 4);
+    // ctx.fillStyle = 'rgba(0,0,0,.2)';
+    // ctx.fill(handPath);
+    // ctx.translate(0, -4);
+
+
+    ctx.fillStyle = '#FFF';
+
+    ctx.shadowBlur = 80;
+    ctx.shadowOffsetY = 25;
+    ctx.shadowColor = 'rgba(0,0,0,.4)';
+
+    ctx.fill(handPath);
+    ctx.strokeStyle = '#000';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.stroke(handPath);
+    ctx.restore();
 }
 
 const drawText = (text, x, y, direction = horizontal, scale = 1) => {
@@ -166,7 +225,6 @@ const drawNekoFrame = ()=>{
     const cutX = 0;
     const cutY = frame * 203;
 
-    console.log('frame',frame);
     const left = frameLefts[frame] || 0;
     ctx.drawImage(
         nekoImage, 
@@ -192,8 +250,10 @@ const draw = async () => {
     if(level){
         nextFrameCount = 1;
         loadNekoImage();
+        outputBtn.setAttribute('data-active', 'true');
     }else{
         nextFrameCount = -1;
+        outputBtn.setAttribute('data-active', 'false');
     }
 
 
@@ -226,6 +286,11 @@ const draw = async () => {
         drawText(id, mojiX, mojiY, direction);
        
     }
+
+    if(!level){
+        drawHand(380,360);
+    }
+
     drawText(`巡礼等级`, 30, 29, 'h', 3.6);
 
     if(level){
@@ -234,9 +299,25 @@ const draw = async () => {
     }
 
 
-    drawText(`Anitabi`, 386, 430, 'h', 2.1);
-    drawText(`巡礼地图`, 376, 461, 'h', 2);
+    drawText(en, 386, 430, 'h', 2.1);
+    drawText(cn, 376, 461, 'h', 2);
 
+    ctx.fillStyle = 'rgba(0,100,0,.2)';
+    ctx.font = '8px sans-serif';
+    
+    const date = new Date();
+    const yyyyMMdd = [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+    ].map(v => String(v).padStart(2, '0')).join('');
+    
+    ctx.fillText([
+        '巡礼等级',
+        'anitabi.cn/junrevel',
+        yyyyMMdd
+    ].join(' · '), 15, 495);
+    
     ctx.restore();
 
     await drawRules();
@@ -351,7 +432,6 @@ setLevelPopEl.onclick = e=>{
 
     if(tagName === 'A'){
         const level = +target.dataset.level || 0;
-        console.log(level);
         setPrefectureLevel(currentPrefecture, level);
         hideLevelPop();
     }
@@ -393,8 +473,6 @@ const htmlEl = document.documentElement;
 
 const showLevelPopByRect = (rect, ratio, x, y, prefecture) =>{
     
-    console.log(prefecture);
-    // const level = getPrefectureLevel(prefecture) || 0;
     // setPrefectureLevel(prefecture, (level + 1) % ruleNames.length);
     let popX = rect.left + (prefecture.x + prefecture.w / 2) / ratio + htmlEl.scrollLeft;
     let popY = rect.top + (prefecture.y + prefecture.h / 2) / ratio + htmlEl.scrollTop;
@@ -421,25 +499,32 @@ const showLevelPopByRect = (rect, ratio, x, y, prefecture) =>{
 }
 
 document.onclick = (e) => {
-    const { x, y, rect, ratio } = getXYFromEvent(e);
+    const {
+        target 
+    } = e;
+    const {
+        tagName
+    } = target;
 
-    const prefecture = findPrefecture(x, y);
-    if(!prefecture){
-        if(levelPopIsShow){
-            return hideLevelPop();
+    if(target === canvas){
+        const { x, y, rect, ratio } = getXYFromEvent(e);
+
+        const prefecture = findPrefecture(x, y);
+        if(!prefecture){
+            if(levelPopIsShow){
+                return hideLevelPop();
+            }
         }
-    }
-
-
-    if(prefecture) {
-        showLevelPopByRect(rect, ratio, x, y, prefecture);
+    
+    
+        if(prefecture) {
+            showLevelPopByRect(rect, ratio, x, y, prefecture);
+        }
     }
 }
 
 output.onmousemove = (e) => {
     const { x, y } = getXYFromEvent(e);
-
-    // console.log(e.clientX,e.clientY,x,y);
 
     const prefecture = findPrefecture(x, y);
     if(prefecture) {
