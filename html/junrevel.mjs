@@ -138,6 +138,38 @@ const getBlobURL = async (canvas) => {
         }, 'image/jpeg', 0.9);
     });
 }
+
+let frame = 0;
+let nextFrameCount = 1;
+const nekoFrameScale = 2;
+const maxFrameIndex = 5;
+
+const nekoImage = new Image();
+let nekoLoaded = false;
+const loadNekoImage = ()=>{
+    if(nekoImage.src) return;
+
+    nekoImage.src = 'neko3.png';
+    // 252 x 203 x 2px
+    nekoImage.onload = () => {
+        nekoLoaded = true;
+        setTimeout(draw, 300);
+    }
+}
+
+const drawNekoFrame = ()=>{
+    if(frame < 0) return;
+    const cutX = 0;
+    const cutY = frame * 203;
+
+    console.log('frame',frame);
+    ctx.drawImage(
+        nekoImage, 
+        cutX * nekoFrameScale, cutY * nekoFrameScale, 252 * nekoFrameScale, 203 * nekoFrameScale,
+        222, 33, 252, 203
+    );
+}
+
 const draw = async () => {
     ctx.save();
     ctx.transform(scale, 0, 0, scale, 0, 0);
@@ -146,6 +178,29 @@ const draw = async () => {
 
 
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
+
+    const level = getAllLevels();
+
+
+    if(level){
+        nextFrameCount = 1;
+        loadNekoImage();
+    }else{
+        nextFrameCount = -1;
+    }
+
+
+    if(nekoLoaded){
+        drawNekoFrame();
+
+        const nextFrame = frame + nextFrameCount;
+
+        if(nextFrame < maxFrameIndex && nextFrame >= -1) {
+            frame = nextFrame;
+            setTimeout(draw, 100);
+        }
+    }
+
 
     ctx.lineWidth = 2;
     ctx.strokeStyle = '#000';
@@ -164,9 +219,8 @@ const draw = async () => {
         drawText(id, mojiX, mojiY, direction);
        
     }
-    drawText(`巡礼等级`, 30, 30, 'h', 3.6);
+    drawText(`巡礼等级`, 30, 29, 'h', 3.6);
 
-    const level = getAllLevels();
     if(level){
         const levelStr = String(level);
         drawText(levelStr, 260 - levelStr.length * 8 , 30, 'h', 3.6);
@@ -185,6 +239,8 @@ const draw = async () => {
         output.src = blobURL;
     }
     
+
+
 }
 
 const ruleNames = [
@@ -390,3 +446,8 @@ output.onmousemove = (e) => {
 
 loadPrefectureLevels();
 draw();
+
+
+window.onresize = ()=>{
+    hideLevelPop();
+}
