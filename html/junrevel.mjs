@@ -139,18 +139,22 @@ const getBlobURL = async (canvas) => {
     });
 }
 
-let frame = 0;
+let frame = -1;
 let nextFrameCount = 1;
 const nekoFrameScale = 2;
 const maxFrameIndex = 5;
+const frameLefts = [
+    110,
+    30,
+]
 
 const nekoImage = new Image();
 let nekoLoaded = false;
 const loadNekoImage = ()=>{
     if(nekoImage.src) return;
 
-    nekoImage.src = 'neko3.png';
-    // 252 x 203 x 2px
+    nekoImage.src = 'neko4.png';
+    // 146 x 203 x 2px
     nekoImage.onload = () => {
         nekoLoaded = true;
         setTimeout(draw, 300);
@@ -163,10 +167,13 @@ const drawNekoFrame = ()=>{
     const cutY = frame * 203;
 
     console.log('frame',frame);
+    const left = frameLefts[frame] || 0;
     ctx.drawImage(
         nekoImage, 
-        cutX * nekoFrameScale, cutY * nekoFrameScale, 252 * nekoFrameScale, 203 * nekoFrameScale,
-        222, 33, 252, 203
+        cutX * nekoFrameScale, cutY * nekoFrameScale, 146 * nekoFrameScale, 203 * nekoFrameScale,
+        223 + left,
+        33, 
+        146, 203
     );
 }
 
