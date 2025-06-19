@@ -102,6 +102,9 @@ const saveFile = (name,url)=>{
     a.download = name;
     a.click();
 }
+
+const sendLog = ()=> new Image().src = `/api/log/lv?l=${getLevelsStr()}`;
+
 outputBtn.onclick = ()=>{
     // canvas.toBlob(blob=>{
     //     const url = URL.createObjectURL(blob);
@@ -114,6 +117,8 @@ outputBtn.onclick = ()=>{
     if(window.innerWidth > 600) {
         saveFile(`巡礼等级_${en}_${new Date().toLocaleString()}.png`,url);
     }
+
+    sendLog();
 }
 const ctx = canvas.getContext('2d');
 
@@ -244,7 +249,7 @@ const draw = async () => {
 
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
-    const level = getAllLevels();
+    const level = getTotalScore();
 
 
     if(level){
@@ -404,15 +409,15 @@ const loadPrefectureLevels = () => {
     }
 }
 
-const getAllLevels = () => {
-    return prefectures.reduce((acc, prefecture) => {
-        return acc + getPrefectureLevel(prefecture);
-    }, 0);
+const getTotalScore = () => {
+    return getLevels().reduce((acc, level) => acc + level, 0);
 }
 
+const getLevels = () => prefectures.map(getPrefectureLevel);
+const getLevelsStr = () => getLevels().join('');
+
 const savePrefectureLevels = () => {
-    const levels = prefectures.map(prefecture => prefecture.level||0).join('');
-    localStorage.setItem(prefectureLevelsStorageKey, levels);
+    localStorage.setItem(prefectureLevelsStorageKey, getLevelsStr());
 }
 
 

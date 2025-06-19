@@ -25,6 +25,11 @@
 
 仅包含 1都、1道、2府、43县 共47个行政区
 
+看板娘形象归属 @anitabi
+朝日礼猫猫形象动画 @Akebi通草
+中线字体设计实现 @itorr
+简化地图设计实现 @itorr
+
 ## 参考
  - 中国制霸 https://lab.magiconch.com/china-ex/
  - 制縣等級 https://zhung.com.tw/japanex/
