@@ -433,10 +433,17 @@ const savePrefectureLevels = () => {
 
 const genSVGTextHTML = (text) => text.split('').map(moji=>`<svg width="14" height="14" viewBox="0 0 14 14" viewBox="0 0 14 14"><path d="${MojiPathStrs[moji]}" /></svg>`).join('')
 
+
+
+const setLevelPopShadowEl = document.createElement('div');
+setLevelPopShadowEl.className = 'set-level-shadow';
+document.body.appendChild(setLevelPopShadowEl);
+
+
 const setLevelPopEl = document.createElement('div');
 setLevelPopEl.className = 'set-level-box';
+document.body.appendChild(setLevelPopEl);
 setLevelPopEl.innerHTML = `<h2>${genSVGTextHTML('巡礼等级')}</h2><i></i><div>${ruleNames.map((name, index) => `<a data-level="${index}" style="background:#${ruleColors[index]}">${genSVGTextHTML(name)}</a>`).join('')}</div>`;
-document.body.appendChild(setLevelPopEl);  
 
 
 
@@ -458,6 +465,14 @@ setLevelPopEl.onclick = e=>{
     }
 }
 
+setLevelPopShadowEl.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if(levelPopIsShow) {
+        hideLevelPop();
+    }
+}
+
 let currentPrefecture;
 let levelPopIsShow = false;
 const showLevelPop = (x, y, prefecture) => {
@@ -465,7 +480,9 @@ const showLevelPop = (x, y, prefecture) => {
     currentPrefecture = prefecture;
     setLevelPopEl.style.left = `${x}px`;
     setLevelPopEl.style.top = `${y}px`;
+
     setLevelPopEl.style.display = 'block';
+    setLevelPopShadowEl.style.display = 'block';
 
     setLevelPopTitleEl.innerHTML = genSVGTextHTML(prefecture.id);
 
@@ -473,6 +490,7 @@ const showLevelPop = (x, y, prefecture) => {
 const hideLevelPop = () => {
     levelPopIsShow = false;
     setLevelPopEl.style.display = 'none';
+    setLevelPopShadowEl.style.display = 'none';
 }
 
 const getXYFromEvent = (e) => {
