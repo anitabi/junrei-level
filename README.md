@@ -30,6 +30,7 @@
  - 简化地图设计实现 @itorr
 
 ## 参考
+ - 国土数値情報 https://nlftp.mlit.go.jp/ksj/
  - 中国制霸 https://lab.magiconch.com/china-ex/
  - 制縣等級 https://zhung.com.tw/japanex/
 
