@@ -57,7 +57,7 @@ svg{
     }
 }
 
-#设置等级 {
+.set-level-box {
     display: none;
     position: absolute;
     z-index: 1;
@@ -66,9 +66,10 @@ svg{
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 3px 6px 0 rgba(0,0,0,0.1);
-    border: 4px solid #000;
+    border: 4px solid #111;
     text-align: center;
     font-weight: bold;
+    color: #111;
 
 
     h2 {
@@ -84,6 +85,21 @@ svg{
         justify-content: center;
         text-decoration: none;
     }
+
+        i{
+            width: 36px;
+            height: 36px;
+
+            // <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><path d='M23,11v8c0,6.5-10,6.7-10,0v-8C13,4.4,23,4.4,23,11z M7,19c0,14.5,22,14.6,22,0c0-2.6-4-2.7-4,0c0,3.7-3.1,7-7,7c-3.5,0-7-2.8-7-7C11,16.3,7,16.4,7,19z'/></svg>
+            // <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill='none' stroke='#000' stroke-width='3' stroke-linecap='round' d="M20.3,29.6c6.2-6.2,6.2-16.4,0-22.6M16.1,25.4c3.9-3.9,3.9-10.2,0-14.1M11.8,21.1c1.6-1.6,1.6-4.1,0-5.7"/></svg>
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"%3E%3Cpath fill="none" stroke="%23000" stroke-width="3" stroke-linecap="round" d="M20.3,29.6c6.2-6.2,6.2-16.4,0-22.6M16.1,25.4c3.9-3.9,3.9-10.2,0-14.1M11.8,21.1c1.6-1.6,1.6-4.1,0-5.7"/%3E%3C/svg%3E');
+            background-size: cover;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+            margin: 11px 8px;
+        }
 
     a {
         padding: 10px;
@@ -118,7 +134,7 @@ svg{
     line-height: 50px;
     border-radius: 10px;
     padding: 0 15px;
-    // border: 3px solid #000;
+    // border: 3px solid #111;
     color: var(--btn-color2);
     box-shadow: 
         0 0 0 3px var(--btn-color2),

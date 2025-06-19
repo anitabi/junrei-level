@@ -67,6 +67,16 @@ const prefectures = `北海道,349,16,135,80,47,33,h
     };
 });
 
+let audio = null;
+const playAudio = (src) => {
+    if(!audio) audio = new Audio();
+    audio.volume = 0.5;
+    audio.src = `vo/${src}.m4a`;
+    audio.play().catch(e => console.error('播放音频失败', e));
+}
+
+const playVO = id => playAudio(String(prefectures.findIndex(vo => vo.id === id)).padStart(2,'0'));
+const playAnitabi = () => playAudio('anitabi/'+String(Math.floor(Math.random() * 24)).padStart(2,'0'));
 const themeColor = '#164c21';
 const cn = '巡礼地图';
 const en = `Anitabi`;
@@ -424,9 +434,11 @@ const savePrefectureLevels = () => {
 const genSVGTextHTML = (text) => text.split('').map(moji=>`<svg width="14" height="14" viewBox="0 0 14 14" viewBox="0 0 14 14"><path d="${MojiPathStrs[moji]}" /></svg>`).join('')
 
 const setLevelPopEl = document.createElement('div');
-setLevelPopEl.id = '设置等级';
-setLevelPopEl.innerHTML = `<h2>${genSVGTextHTML('巡礼等级')}</h2><div>${ruleNames.map((name, index) => `<a data-level="${index}" style="background:#${ruleColors[index]}">${genSVGTextHTML(name)}</a>`).join('')}</div>`;
-document.body.appendChild(setLevelPopEl);    
+setLevelPopEl.className = 'set-level-box';
+setLevelPopEl.innerHTML = `<h2>${genSVGTextHTML('巡礼等级')}</h2><i></i><div>${ruleNames.map((name, index) => `<a data-level="${index}" style="background:#${ruleColors[index]}">${genSVGTextHTML(name)}</a>`).join('')}</div>`;
+document.body.appendChild(setLevelPopEl);  
+
+
 
 const setLevelPopTitleEl = setLevelPopEl.querySelector('h2');
 setLevelPopEl.onclick = e=>{
@@ -439,6 +451,10 @@ setLevelPopEl.onclick = e=>{
         const level = +target.dataset.level || 0;
         setPrefectureLevel(currentPrefecture, level);
         hideLevelPop();
+    }
+
+    if(tagName === 'I'){
+        playVO(currentPrefecture.id);
     }
 }
 
@@ -476,6 +492,7 @@ const popHalfH = popH / 2;
 
 const htmlEl = document.documentElement;
 
+
 const showLevelPopByRect = (rect, ratio, x, y, prefecture) =>{
     
     // setPrefectureLevel(prefecture, (level + 1) % ruleNames.length);
@@ -503,6 +520,8 @@ const showLevelPopByRect = (rect, ratio, x, y, prefecture) =>{
     );
 }
 
+const isAnitabi = (x, y) => x > 372 && y > 434;
+
 document.onclick = (e) => {
     const {
         target 
@@ -514,17 +533,22 @@ document.onclick = (e) => {
     if(target === canvas){
         const { x, y, rect, ratio } = getXYFromEvent(e);
 
+        if(isAnitabi(x, y)) {
+            return playAnitabi();
+        }
+
         const prefecture = findPrefecture(x, y);
         if(!prefecture){
             if(levelPopIsShow){
                 return hideLevelPop();
             }
         }
-    
+
     
         if(prefecture) {
             showLevelPopByRect(rect, ratio, x, y, prefecture);
         }
+
     }
 }
 
