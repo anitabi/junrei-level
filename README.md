@@ -29,6 +29,11 @@
  - 中线字体设计实现 @itorr
  - 简化地图设计实现 @itorr
 
+## 社交媒体
+ - 微博 [@动画巡礼](https://weibo.com/u/5887774003) 
+ - Bilibili [@动画巡礼](https://space.bilibili.com/3546874137021353)
+ - 小红书 [@Anitabi动画巡礼](https://www.xiaohongshu.com/user/profile/674beccc000000001d02d24c)
+
 ## 参考
  - 国土数値情報 https://nlftp.mlit.go.jp/ksj/
  - 中国制霸 https://lab.magiconch.com/china-ex/
