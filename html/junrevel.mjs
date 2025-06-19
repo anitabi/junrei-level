@@ -103,7 +103,7 @@ const saveFile = (name,url)=>{
     a.click();
 }
 
-const sendLog = ()=> new Image().src = `/api/log/lv?l=${getLevelsStr()}`;
+const sendLog = ()=> new Image().src = `/api/log/lv?data=${encodeURI(`"${getLevelsStr()}"`)}`;
 
 outputBtn.onclick = ()=>{
     // canvas.toBlob(blob=>{
