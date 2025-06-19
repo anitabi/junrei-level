@@ -184,11 +184,11 @@ const drawHand = (x,y,scale = 1)=>{
     ctx.restore();
 }
 
-const drawText = (text, x, y, direction = horizontal, scale = 1) => {
+const drawText = (text, x, y, direction = horizontal, scale = 1 ,lineWidth = 1.5 ) => {
     ctx.save();
     ctx.translate( x, y );
     ctx.scale(scale, scale);
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = lineWidth;
     const mojis = text.split('');
     for(let i = 0; i < mojis.length; i++) {
         const moji = mojis[i];
@@ -306,10 +306,23 @@ const draw = async () => {
         drawHand(380,360);
     }
 
+
+    // ctx.strokeStyle = 'rgba(212,255,213,.5)';
+    // drawText(`巡礼等级`, 30, 29, 'h', 3.6, 3);
+
+    // ctx.strokeStyle = '#000';
     drawText(`巡礼等级`, 30, 29, 'h', 3.6);
 
     if(level){
         const levelStr = String(level);
+        ctx.strokeStyle = 'rgba(212,255,213,.3)';
+
+        // 模糊
+        // ctx.filter = 'blur(20px)';
+        drawText(levelStr, 260 - levelStr.length * 8 , 30, 'h', 3.6, 2.6);
+        // ctx.filter = 'none';
+
+    ctx.strokeStyle = '#000';
         drawText(levelStr, 260 - levelStr.length * 8 , 30, 'h', 3.6);
     }
 
