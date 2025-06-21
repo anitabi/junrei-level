@@ -364,8 +364,8 @@ const ruleNames = [
     '旅行过',
     '巡礼过',
     '巡礼两部',
-    '三部以上',
-    '七部以上',
+    '三部及以上',
+    '七部及以上',
 ];
 const ruleColors = 'FFF8AFAFBFE7FB7F77'.match(/.{3}/g);
 
