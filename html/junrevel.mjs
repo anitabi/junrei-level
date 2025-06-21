@@ -113,7 +113,7 @@ const saveFile = (name,url)=>{
     a.click();
 }
 
-const sendLog = ()=> new Image().src = `/api/log/lv?data=${encodeURI(`"${getLevelsStr()}"`)}`;
+const sendLog = ()=> new Image().src = `https://hk.anitabi.cn/api/log/lv?data=${encodeURI(`"${getLevelsStr()}"`)}`;
 
 outputBtn.onclick = ()=>{
     // canvas.toBlob(blob=>{
